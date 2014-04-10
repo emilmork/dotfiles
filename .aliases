@@ -1,4 +1,63 @@
+<<<<<<< HEAD
 
+=======
+# Load ~/.extra, ~/.bash_prompt, ~/.exports, ~/.aliases and ~/.functions
+# ~/.extra can be used for settings you don’t want to commit
+for file in ~/.{extra,bash_prompt,exports,aliases,functions}; do
+	[ -r "$file" ] && source "$file"
+function git_clone {
+  URL=$1
+  DATE=`date`
+  mkdir -p ~/Documents/dev/github/
+  cd ~/Documents/dev/github/
+  REPO=`echo $URL | awk '{ split($0, url, "/"); print url[4] "-" url[5] }'`
+  FOLDER=`echo "$REPO-$DATE" | sed -E "s/[ :]/-/g"`
+  git clone $URL".git" $FOLDER
+  cd $FOLDER
+  sl .
+}
+
+function git_create {
+ URL=$1
+ mkdir -p ~/Documents/dev/github/$1
+ cd ~/Documents/dev/github/$1
+ touch README.md
+ git init
+ git add README.md
+ git commit -m "first commit"
+ git remote add origin git@github.com:emilmork/$URL".git"
+}
+
+done
+unset file
+
+# init z   https://github.com/rupa/z
+#. ~/dotfiles/z/z.sh
+
+# init rvm
+source ~/.rvm/scripts/rvm
+
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell
+
+# Prefer US English and use UTF-8
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US"
+
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
+
+# Add tab completion for `defaults read|write NSGlobalDomain`
+# You could just use `-g` instead, but I like being explicit
+complete -W "NSGlobalDomain" defaults
+>>>>>>> ecab2cc72162520118656ace79fa1946e4b0c4e9
 
 # Easier navigation: .., ..., ~ and -
 alias ..="cd .."
@@ -8,6 +67,21 @@ alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
+<<<<<<< HEAD
+=======
+# Shortcuts
+alias d="cd ~/Documents"
+alias dropbox="cd ~/Dropbox"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/projects"
+alias g="git"
+alias h="history"
+alias j="jobs"
+alias inatur="cd ~/prosj/inatur/Inatur"
+alias dev="cd ~/Documents/dev"
+
+>>>>>>> ecab2cc72162520118656ace79fa1946e4b0c4e9
 # programs
 alias sl='open -a "Sublime Text"'
 # also/or do this:
@@ -160,4 +234,8 @@ done
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
+<<<<<<< HEAD
 alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
+=======
+alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
+>>>>>>> ecab2cc72162520118656ace79fa1946e4b0c4e9
