@@ -1,0 +1,22 @@
+function git_clone {
+  URL=$1
+  DATE=`date`
+  mkdir -p ~/Documents/dev/github/
+  cd ~/Documents/dev/github/
+  REPO=`echo $URL | awk '{ split($0, url, "/"); print url[4] "-" url[5] }'`
+  FOLDER=`echo "$REPO-$DATE" | sed -E "s/[ :]/-/g"`
+  git clone $URL".git" $FOLDER
+  cd $FOLDER
+  sl .
+}
+
+function git_create {
+ URL=$1
+ mkdir -p ~/Documents/dev/github/$1
+ cd ~/Documents/dev/github/$1
+ touch README.md
+ git init
+ git add README.md
+ git commit -m "first commit"
+ git remote add origin git@github.com:emilmork/$URL".git"
+}
